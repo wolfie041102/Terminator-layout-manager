@@ -41,16 +41,14 @@ def get_layouts():
                     continue
                 else:
                     field = str(re.findall('^ +\w+', line))[8:-2]
-                    value = str(re.findall('\S+$', line))[2:-2]
+                    value = str(re.findall('(\=[a-zA-Z0-9-,:@\" ]+)', line))[4:-2]
                     layouts[cur_layout][child][field] = value
                     continue
-    print(layouts)
-    
+    return layouts
 
 # def main():
     
 #     # define vars
     
 #     # ---g
-
-get_layouts()        
+     
