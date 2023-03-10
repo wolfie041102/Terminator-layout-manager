@@ -16,7 +16,6 @@ def changeState(button_pressed, uuid):
     
     if str(state) == 'normal':
         main_frame = frames.get(uuid)
-        print(main_frame)
         main_frame.grid(column=0, row=1, sticky="NESW")
         button_pressed['state'] = tk.DISABLED
         if not first_time:
@@ -35,7 +34,8 @@ def nav_menu(container):
 
     # grid layout for the input frame
     frame.columnconfigure((0, 1, 2), weight=1)
-
+    frame.rowconfigure(0, weight=1)
+    
     home = ttk.Button(frame, command=lambda:[changeState(home, 0), ], text='Home')
     home.grid(column=0, row=0, sticky="NESW")
     
@@ -44,12 +44,6 @@ def nav_menu(container):
     
     settings = ttk.Button(frame, command=lambda:[changeState(settings, 2)], text='Settings')
     settings.grid(column=2, row=0, sticky="NESW")
-    
-    sep = ttk.Separator(frame,orient='horizontal')
-    sep.grid(column=0, row=1, sticky="NESW")
-
-    for widget in frame.winfo_children():
-        widget.grid(padx=0, pady=0)
 
     return frame
 
@@ -59,6 +53,7 @@ def home(container):
 
     # grid layout for the input frame
     frame.columnconfigure(0, weight=1)
+    frame.rowconfigure(0, weight=1)
     
     frame.columnconfigure(1, weight=1)
     home = ttk.Button(frame, command=lambda:[changeState(home)], text='Home')
@@ -78,6 +73,8 @@ def layouts(container):
 
     # grid layout for the input frame
     frame.columnconfigure(0, weight=1)
+    frame.columnconfigure(1, weight=6)
+    frame.rowconfigure(0, weight=1)
     
     layouts_var = tk.StringVar(value=all_layouts)
     listbox = tk.Listbox(
@@ -85,7 +82,10 @@ def layouts(container):
         listvariable=layouts_var,
         height=10,
         selectmode='browse')
-    listbox.grid(column=0, row=0, sticky="NW")
+    listbox.grid(column=0, row=0, sticky="NESW")
+    
+    label = tk.Label(frame, bg='green', text='This is a label')
+    label.grid(column=1, row=0, sticky="NESW")
 
     
     return frame
@@ -97,6 +97,7 @@ def settings(container):
     # grid layout for the input frame
     frame.columnconfigure(0, weight=1)
     frame.columnconfigure(1, weight=1)
+    frame.rowconfigure(0, weight=1)
     
     return frame
 
@@ -110,9 +111,11 @@ def create_main_window():
 
     # layout on the root window
     root.columnconfigure(0, weight=1)
-    root.rowconfigure((0, 1), weight=2)
-
+    root.rowconfigure(0, weight=1)
+    root.rowconfigure(1, weight=5)
+                      
     nav_frame = nav_menu(root)
     nav_frame.grid(column=0, row=0, sticky="NESW")
     
     root.mainloop()
+
